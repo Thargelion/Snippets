@@ -29,7 +29,7 @@
   display:none;
 }
 
-.calesita > .elemento:first-of-type{ /*Parece rebuscado pero de este modo nos aseguramos que todas las calesitas tengan su primer imagen a la vista */
+.calesita > .elemento:first-of-type{
   display: block;
 }
   
