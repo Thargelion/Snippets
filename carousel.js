@@ -34,42 +34,52 @@
 }
   
 */
+// calesita.js
 
 $(document).ready(function() {
-  var arrayCalesitas = document.getElementsByClassName('calesita');
-  var posicion = 0;
-  // encendidoTotal(arrayCalesitas);
+    var arrayCalesitas = llenarArrayCalesitas(); //creo un array con todas las calesitas del html
+    var posicion = 0;
+    encendidoTotal(arrayCalesitas); //inicio la secuencia de encendido de las calesitas
 });
 
-function llenarArrayCalesitas(){
-  return document.getElementsByClassName('calesita');
-}
 
 function encendidoCalesita(calesita, posicion) {
-  var velocidad = 5000;
-  if ($(calesita).data("timer") != undefined) {
-    velocidad = $(calesita).data("timer");
-  }
-  setInterval(function() {
-    if (posicion < calesita.length) {
-      cambiadorCalesita(calesita, posicion);
-      posicion = posicion + 1;
-    } else {
-      posicion = 0;
-      cambiadorCalesita(calesita, posicion);
-      posicion = posicion + 1;
+    var velocidad = 5000; //velocidad por defecto
+    var elementosCalesita = armarCalesitas(calesita); //creo un array con todos los elementos que tiene la calesita
+    if ($(calesita).data("timer") != undefined) { //pregunta si el maquetador quiere modificar la velocidad por defecto
+        velocidad = $(calesita).data("timer");
     }
-  }, velocidad);
+    setInterval(function() { //inicio el loop de calesitas
+        if (posicion < elementosCalesita.length) {
+            cambiadorCalesita(calesita, posicion);
+            posicion = posicion + 1;
+        } else {
+            posicion = 0;
+            cambiadorCalesita(calesita, posicion);
+            posicion = posicion + 1;
+        }
+    }, velocidad);
 }
 
+function llenarArrayCalesitas() {
+    return document.getElementsByClassName('calesita');
+}
+
+function armarCalesitas(calesita) {
+    var elementosCalesita = calesita.getElementsByClassName('elemento');
+    return elementosCalesita;
+}
+
+
 function encendidoTotal(arrayCalesitas) {
-  for (var i = 0; i < arrayCalesitas.length; i++) {
-    encendidoCalesita(arrayCalesitas[i], 0);
-  }
+    var calesita = arrayCalesitas; //creo un array de calesitas
+    for (var i = 0; i < calesita.length; i++) { //recorro el array encendiendo cada calesita
+        encendidoCalesita(calesita[i], 0);
+    }
 }
 
 function cambiadorCalesita(calesita, posicion) {
-  var arrayImagenes = calesita.getElementsByClassName('elemento');
-  $(arrayImagenes).css("display", "none");
-  $(arrayImagenes[posicion]).fadeIn("slow");
+    var arrayImagenes = calesita.getElementsByClassName('elemento'); //creo un array con los elementos de la calesita
+    $(arrayImagenes).css("display", "none"); //quito todos los elementos de la calesita
+    $(arrayImagenes[posicion]).fadeIn("slow"); //muestro el elemento de la calesita actual
 }
